@@ -12,7 +12,7 @@ defmodule PollutiondbPhxWeb.StationRangeLive do
 
   def mount(_params, _session, socket) do
     socket = assign(socket, stations: Station.get_all(), name: "", lat: "", lon: "",
-                    lat_min: 0, lat_max: 10, lon_min: 0, lon_max: 10)
+                    lat_min: 0, lat_max: 300, lon_min: 0, lon_max: 300)
     {:ok, socket}
   end
 
@@ -33,10 +33,10 @@ defmodule PollutiondbPhxWeb.StationRangeLive do
   def render(assigns) do
     ~H"""
     <form phx-change="update">
-      Lat min <input type="range" min="0" max="10" name="lat_min" value={@lat_min}/><br/>
-      Lat max <input type="range" min="0" max="10" name="lat_max" value={@lat_max}/><br/>
-      Lon min <input type="range" min="0" max="10" name="lon_min" value={@lon_min}/><br/>
-      Lon max <input type="range" min="0" max="10" name="lon_max" value={@lon_max}/><br/>
+      Lat min <input type="range" min="0" max="300" name="lat_min" value={@lat_min}/><br/>
+      Lat max <input type="range" min="0" max="300" name="lat_max" value={@lat_max}/><br/>
+      Lon min <input type="range" min="0" max="300" name="lon_min" value={@lon_min}/><br/>
+      Lon max <input type="range" min="0" max="300" name="lon_max" value={@lon_max}/><br/>
     </form>
 
     <table>

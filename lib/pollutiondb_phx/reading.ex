@@ -46,8 +46,9 @@ defmodule PollutiondbPhx.Reading do
 
   def find_by_date(date) do
     PollutiondbPhx.Repo.all(
-      Ecto.Query.where(PollutiondbPhx.Reading, date: ^date))
-    |> PollutiondbPhx.Repo.preload(:station)
+      Ecto.Query.from(r in PollutiondbPhx.Reading,
+      where: r.date == ^date,
+      order_by: [desc: r.time],
+      preload: [:station]))
   end
-
 end

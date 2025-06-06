@@ -11,7 +11,7 @@ defmodule PollutiondbPhxWeb.StationLive do
   end
 
   def mount(_params, _session, socket) do
-    socket = assign(socket, stations: Station.get_all(), name: "", lat: "", lon: "")
+    socket = assign(socket, stations: Station.get_all(), name: "", lat: "", lon: "", search_name: "")
     {:ok, socket}
   end
 
@@ -21,10 +21,10 @@ defmodule PollutiondbPhxWeb.StationLive do
     {:noreply, socket}
   end
 
-  def handle_event("search", %{"name" => name}, socket) do
-    socket = case name do
+  def handle_event("search", %{"search_name" => search_name}, socket) do
+    socket = case search_name do
       "" -> assign(socket, stations: Station.get_all())
-      _ -> assign(socket, stations: Station.find_by_name(name))
+      _ -> assign(socket, stations: Station.find_by_prefix(search_name))
     end
     {:noreply, socket}
   end
@@ -40,7 +40,7 @@ defmodule PollutiondbPhxWeb.StationLive do
     </form>
 
     <form phx-change="search">
-      Query: <input type="text" name="name" value={@name} /><br/>
+      Query: <input type="text" name="search_name" value={@search_name} /><br/>
     </form>
 
     <table>

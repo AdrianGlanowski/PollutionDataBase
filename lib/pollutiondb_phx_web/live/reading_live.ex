@@ -6,7 +6,7 @@ defmodule PollutiondbPhxWeb.ReadingLive do
   alias PollutiondbPhx.Reading
 
   def mount(_params, _session, socket) do
-    socket = assign(socket, readings: recent_readings(), stations: Station.get_all(), station_name: "", type: "", value: "", date: Date.utc_today)
+    socket = assign(socket, readings: Reading.find_by_date(Date.utc_today) |> Enum.take(10), stations: Station.get_all(), station_name: "", type: "", value: "", date: Date.utc_today)
     {:ok, socket}
   end
 

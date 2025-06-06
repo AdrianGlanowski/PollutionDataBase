@@ -52,6 +52,14 @@ defmodule PollutiondbPhx.Station do
       |> PollutiondbPhx.Repo.preload(:readings)
   end
 
+  def find_by_prefix(name) do
+    like = "#{name}%"
+    PollutiondbPhx.Repo.all(
+      Ecto.Query.from(s in PollutiondbPhx.Station,
+        where: like(s.name, ^like)))
+    |> PollutiondbPhx.Repo.preload(:readings)
+  end
+
   def find_by_location(lon, lat) do
     Ecto.Query.from(s in PollutiondbPhx.Station,
       where: s.lon == ^lon,
